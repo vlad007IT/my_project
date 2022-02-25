@@ -3,12 +3,17 @@ telegram_bot
 import telebot, wikipedia, re
 import random
 from telebot import types
+
+
+
 file = open(r'C:\Users\User\PycharmProjects\wlan\my_project\facts.txt', 'r', encoding='UTF-8')
 facts = file.read().split('\n')
 
 
 
 bot = telebot.TeleBot('5169126482:AAHbUpWVZN6qMU9dRb4e0K5joOSXMbluSEA')
+
+
 wikipedia.set_lang("ru")
 
 
@@ -17,14 +22,19 @@ def getwiki(s):
     try:
         ny = wikipedia.page(s)
         # Получаем первую тысячу символов
+        
         wikitext = ny.content[:1000]
         # Разделяем по точкам
+        
         wikimas = wikitext.split('.')
         # Отбрасываем всЕ после последней точки
+        
         wikimas = wikimas[:-1]
         # Создаем пустую переменную для текста
+        
         wikitext2 = ''
         # Проходимся по строкам, где нет знаков «равно» (то есть все, кроме заголовков)
+        
         for x in wikimas:
             if not('==' in x):
                     # Если в строке осталось больше трех символов, добавляем ее к нашей переменной и возвращаем утерянные при разделении строк точки на место
@@ -36,8 +46,10 @@ def getwiki(s):
         wikitext2 = re.sub('\([^()]*\)', '', wikitext2)
         wikitext2 = re.sub('\([^()]*\)', '', wikitext2)
         wikitext2 = re.sub('\{[^\{\}]*\}', '', wikitext2)
+        
         # Возвращаем текстовую строку
         return wikitext2
+        
     # Обрабатываем исключение, которое мог вернуть модуль wikipedia при запросе
     except Exception as e:
         return 'к сожалению этого я не знаю'
@@ -55,6 +67,8 @@ def start(m, res=False):
                      reply_markup = markup)
     markup.add(item1)
     markup.add(item2)
+    
+    
 
 # Получение сообщений от юзера
 @bot.message_handler(content_types=["text"])
